@@ -1,4 +1,6 @@
-# PearAI's Integration of Roo Code / Cline, a coding agent. Name attribution will always be kept in tact.
+# Ascende Agent
+
+Ascende's Integration of Roo Code / Cline, a coding agent. Based on PearAI's integration. Name attribution will always be kept intact.
 
 ## Local Setup & Development
 

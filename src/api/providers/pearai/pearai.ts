@@ -25,8 +25,8 @@ export class PearAIHandler extends BaseProvider implements SingleCompletionHandl
 		super()
 		if (!options.pearaiApiKey) {
 			vscode.commands.executeCommand("pearai-roo-cline.PearAIKeysNotFound", undefined)
-			vscode.window.showErrorMessage("PearAI API key not found.", "Login to PearAI").then(async (selection) => {
-				if (selection === "Login to PearAI") {
+			vscode.window.showErrorMessage("ascende.ai API key not found.", "Login to ascende.ai").then(async (selection) => {
+				if (selection === "Login to ascende.ai") {
 					const extensionUrl = `${vscode.env.uriScheme}://pearai.pearai/auth`
 					const callbackUri = await vscode.env.asExternalUri(vscode.Uri.parse(extensionUrl))
 					vscode.env.openExternal(
@@ -36,7 +36,7 @@ export class PearAIHandler extends BaseProvider implements SingleCompletionHandl
 					)
 				}
 			})
-			throw new Error("PearAI API key not found. Please login to PearAI.")
+			throw new Error("ascende.ai API key not found. Please login to ascende.ai.")
 		} else {
 			vscode.commands.executeCommand("pearai.checkPearAITokens", undefined)
 		}
@@ -61,7 +61,7 @@ export class PearAIHandler extends BaseProvider implements SingleCompletionHandl
 		if (modelId.startsWith("pearai")) {
 			try {
 				if (!options.pearaiAgentModels) {
-					throw new Error("PearAI models not found")
+					throw new Error("ascende.ai models not found")
 				}
 				const pearaiAgentModels = options.pearaiAgentModels
 				const underlyingModel =

@@ -402,7 +402,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 						case "focusInput":
 							textAreaRef.current?.focus()
 							break
-						case "PearAIKeysNotFound":
+						case "AscendeKeysNotFound":
 							setInputValue(lastInputValue)
 							setTextAreaDisabled(false)
 							setSelectedImages(lastInputImages)
@@ -1289,10 +1289,8 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 									<img src={splashIcon} alt="..." />
 									<div className="w-[300px] flex-col justify-start items-start gap-5 inline-flex">
 										<div className="flex flex-col text-left">
-											<div className="text-2xl">PearAI Coding Agent</div>
-											<div className="h-[18px] opacity-50 text-xs leading-[18px]">
-												Powered by Roo Code / Cline
-											</div>
+											<div className="text-2xl">ascende.ai Coding Agent</div>
+
 										</div>
 									</div>
 									<div className="w-[300px] text-left opacity-50 text-xs leading-[18px]">

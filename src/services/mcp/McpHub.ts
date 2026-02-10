@@ -1394,11 +1394,11 @@ export class McpHub {
 
 				await fs.writeFile(settingsPath, JSON.stringify(config, null, 2))
 				await this.updateServerConnections(config.mcpServers)
-				vscode.window.showInformationMessage("PearAI API key cleared successfully")
+				vscode.window.showInformationMessage("ascende.ai API key cleared successfully")
 			}
 		} catch (error) {
-			console.error("Failed to clear PearAI API key:", error)
-			vscode.window.showErrorMessage("Failed to clear PearAI API key")
+			console.error("Failed to clear ascende.ai API key:", error)
+			vscode.window.showErrorMessage("Failed to clear ascende.ai API key")
 			throw error
 		}
 	}
@@ -1420,8 +1420,8 @@ export class McpHub {
 				// vscode.window.showInformationMessage("PearAI API key updated successfully")
 			}
 		} catch (error) {
-			console.error("Failed to update PearAI API key:", error)
-			vscode.window.showErrorMessage("Failed to update PearAI API key")
+			console.error("Failed to update ascende.ai API key:", error)
+			vscode.window.showErrorMessage("Failed to update ascende.ai API key")
 			throw error
 		}
 	}

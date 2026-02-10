@@ -415,7 +415,7 @@ const ApiOptions = ({
 										type: "openPearAIAuth",
 									})
 								}}>
-								Login to PearAI
+								Login to ascende.ai
 							</VSCodeButton>
 							<p
 								style={{
@@ -423,7 +423,7 @@ const ApiOptions = ({
 									marginTop: "5px",
 									color: "var(--vscode-descriptionForeground)",
 								}}>
-								Connect your PearAI account to use servers.
+								Connect your ascende.ai account to use servers.
 							</p>
 						</>
 					) : (
@@ -433,7 +433,7 @@ const ApiOptions = ({
 								marginTop: "5px",
 								color: "var(--vscode-descriptionForeground)",
 							}}>
-							User already logged in to PearAI. Click 'Done' to proceed!
+							User already logged in to ascende.ai. Click 'Done' to proceed!
 						</p>
 					)}
 				</div>

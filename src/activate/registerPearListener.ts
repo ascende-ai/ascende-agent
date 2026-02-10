@@ -7,7 +7,7 @@ import { PEARAI_CREATOR_MODE_WEBAPP_MANAGER_SLUG } from "../shared/modes"
 export const getPearaiExtension = async () => {
 	const pearAiExtension = vscode.extensions.getExtension("pearai.pearai")
 
-	assert(!!pearAiExtension, "PearAI extension not found")
+	assert(!!pearAiExtension, "ascende.ai extension not found")
 
 	if (!pearAiExtension.isActive) {
 		await pearAiExtension.activate()

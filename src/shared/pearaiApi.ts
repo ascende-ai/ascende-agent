@@ -36,7 +36,7 @@ export const pearaiDefaultModelInfo: ModelInfo = {
 	cacheWritesPrice: 3.75,
 	cacheReadsPrice: 0.3,
 	description:
-		"PearAI Model automatically routes you to the most best / most suitable model on the market. Recommended for most users.",
+		"ascende.ai Model automatically routes you to the most best / most suitable model on the market. Recommended for most users.",
 }
 
 export const pearaiModels = {
@@ -50,7 +50,7 @@ export const pearaiModels = {
 		cacheWritesPrice: 3.75,
 		cacheReadsPrice: 0.3,
 		description:
-			"PearAI Model automatically routes you to the most best / most suitable model on the market. Recommended for most users.",
+			"ascende.ai Model automatically routes you to the most best / most suitable model on the market. Recommended for most users.",
 	},
 } as const satisfies Record<string, ModelInfo>
 

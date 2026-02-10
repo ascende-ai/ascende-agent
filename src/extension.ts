@@ -177,7 +177,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand("pearai-roo-cline.PearAIKeysNotFound", async () => {
 			const provider = await ClineProvider.getInstance()
 			if (provider) {
-				provider.postMessageToWebview({ type: "action", action: "PearAIKeysNotFound" })
+				provider.postMessageToWebview({ type: "action", action: "AscendeKeysNotFound" })
 			}
 		}),
 	)

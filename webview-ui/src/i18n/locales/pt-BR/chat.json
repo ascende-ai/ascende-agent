@@ -1,5 +1,5 @@
 {
-	"greeting": "Bem-vindo ao PearAI Agent (Powered by Roo Code / Cline)",
+	"greeting": "Bem-vindo ao ascende.ai Agent (Powered by Roo Code / Cline)",
 	"task": {
 		"title": "Tarefa",
 		"seeMore": "Ver mais",
@@ -192,7 +192,7 @@
 	"autoApprove": {
 		"title": "Aprovação automática:",
 		"none": "Nenhuma",
-		"description": "A aprovação automática permite que o PearAI Agent (Powered by Roo Code / Cline) execute ações sem pedir permissão. Ative apenas para ações nas quais você confia totalmente. Configuração mais detalhada disponível nas <settingsLink>Configurações</settingsLink>."
+		"description": "A aprovação automática permite que o ascende.ai Agent (Powered by Roo Code / Cline) execute ações sem pedir permissão. Ative apenas para ações nas quais você confia totalmente. Configuração mais detalhada disponível nas <settingsLink>Configurações</settingsLink>."
 	},
 	"reasoning": {
 		"thinking": "Pensando",
@@ -202,7 +202,7 @@
 		"copyToInput": "Copiar para entrada (ou Shift + clique)"
 	},
 	"announcement": {
-		"title": "🎉 PearAI Agent (Powered by Roo Code / Cline) 3.15 Lançado",
+		"title": "🎉 ascende.ai Agent (Powered by Roo Code / Cline) 3.15 Lançado",
 		"description": "Agent Code 3.15 traz novos recursos e melhorias baseados no seu feedback.",
 		"whatsNew": "O que há de novo",
 		"feature1": "<bold>Cache de prompts para Vertex</bold>: Adicionado suporte de cache de prompts para Vertex AI, melhorando tempos de resposta e reduzindo custos de API",
@@ -236,7 +236,7 @@
 	"systemPromptWarning": "AVISO: Substituição personalizada de instrução do sistema ativa. Isso pode comprometer gravemente a funcionalidade e causar comportamento imprevisível.",
 	"shellIntegration": {
 		"title": "Aviso de execução de comando",
-		"description": "Seu comando está sendo executado sem a integração de shell do terminal VSCode. Para suprimir este aviso, você pode desativar a integração de shell na seção <strong>Terminal</strong> das <settingsLink>configurações do PearAI Agent (Powered by Roo Code / Cline)</settingsLink> ou solucionar problemas de integração do terminal VSCode usando o link abaixo.",
+		"description": "Seu comando está sendo executado sem a integração de shell do terminal VSCode. Para suprimir este aviso, você pode desativar a integração de shell na seção <strong>Terminal</strong> das <settingsLink>configurações do ascende.ai Agent (Powered by Roo Code / Cline)</settingsLink> ou solucionar problemas de integração do terminal VSCode usando o link abaixo.",
 		"troubleshooting": "Clique aqui para a documentação de integração de shell."
 	}
 }
