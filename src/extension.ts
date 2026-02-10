@@ -20,6 +20,7 @@ import { ContextProxy } from "./core/config/ContextProxy"
 import { ClineProvider } from "./core/webview/ClineProvider"
 import { CodeActionProvider } from "./core/CodeActionProvider"
 import { DIFF_VIEW_URI_SCHEME } from "./integrations/editor/DiffViewProvider"
+import { ClineDiffFileSystemProvider } from "./integrations/editor/ClineDiffFileSystemProvider"
 import { McpServerManager } from "./services/mcp/McpServerManager"
 import { telemetryService } from "./services/telemetry/TelemetryService"
 import { TerminalRegistry } from "./integrations/terminal/TerminalRegistry"
@@ -197,6 +198,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.workspace.registerTextDocumentContentProvider(DIFF_VIEW_URI_SCHEME, diffContentProvider),
+	)
+
+	// Register FileSystemProvider so cline-diff: URIs can be resolved by the file service
+	// (e.g. when opening from Problems panel). Prevents "Unable to resolve filesystem provider" errors.
+	context.subscriptions.push(
+		vscode.workspace.registerFileSystemProvider(DIFF_VIEW_URI_SCHEME, new ClineDiffFileSystemProvider(), {
+			isCaseSensitive: true,
+			isReadonly: true,
+		}),
 	)
 
 	context.subscriptions.push(vscode.window.registerUriHandler({ handleUri }))
