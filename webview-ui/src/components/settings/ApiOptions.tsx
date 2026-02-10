@@ -292,9 +292,9 @@ const ApiOptions = ({
 		}
 		return MODELS_BY_PROVIDER[selectedProvider]
 			? Object.keys(MODELS_BY_PROVIDER[selectedProvider]).map((modelId) => ({
-					value: modelId,
-					label: modelId,
-				}))
+				value: modelId,
+				label: modelId,
+			}))
 			: []
 	}, [selectedProvider, pearaiModels])
 
@@ -679,22 +679,22 @@ const ApiOptions = ({
 					)}
 					{(apiConfiguration?.apiModelId?.startsWith("codestral-") ||
 						(!apiConfiguration?.apiModelId && mistralDefaultModelId.startsWith("codestral-"))) && (
-						<>
-							<VSCodeTextField
-								value={apiConfiguration?.mistralCodestralUrl || ""}
-								type="url"
-								onInput={handleInputChange("mistralCodestralUrl")}
-								placeholder="https://codestral.mistral.ai"
-								className="w-full">
-								<label className="block font-medium mb-1">
-									{t("settings:providers.codestralBaseUrl")}
-								</label>
-							</VSCodeTextField>
-							<div className="text-sm text-vscode-descriptionForeground -mt-2">
-								{t("settings:providers.codestralBaseUrlDesc")}
-							</div>
-						</>
-					)}
+							<>
+								<VSCodeTextField
+									value={apiConfiguration?.mistralCodestralUrl || ""}
+									type="url"
+									onInput={handleInputChange("mistralCodestralUrl")}
+									placeholder="https://codestral.mistral.ai"
+									className="w-full">
+									<label className="block font-medium mb-1">
+										{t("settings:providers.codestralBaseUrl")}
+									</label>
+								</VSCodeTextField>
+								<div className="text-sm text-vscode-descriptionForeground -mt-2">
+									{t("settings:providers.codestralBaseUrlDesc")}
+								</div>
+							</>
+						)}
 				</>
 			)}
 

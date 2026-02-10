@@ -29,7 +29,7 @@ export const defaultHeaders = {
 	"X-Title": "ascende.ai",
 }
 
-export interface OpenAiHandlerOptions extends ApiHandlerOptions {}
+export interface OpenAiHandlerOptions extends ApiHandlerOptions { }
 
 export class PearAIGenericHandler extends BaseProvider implements SingleCompletionHandler {
 	protected options: OpenAiHandlerOptions

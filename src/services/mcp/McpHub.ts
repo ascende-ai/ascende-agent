@@ -595,7 +595,7 @@ export class McpHub {
 				} else {
 					console.error(`No stderr stream for ${name}`)
 				}
-				transport.start = async () => {} // No-op now, .connect() won't fail
+				transport.start = async () => { } // No-op now, .connect() won't fail
 			} else {
 				// SSE connection
 				const sseOptions = {

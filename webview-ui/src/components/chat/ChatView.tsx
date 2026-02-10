@@ -4,8 +4,6 @@ import debounce from "debounce"
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso"
 import removeMd from "remove-markdown"
 import { Trans } from "react-i18next"
-import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
-
 import {
 	ClineAsk,
 	ClineMessage,
@@ -38,17 +36,9 @@ import ChatRow from "./ChatRow"
 import ChatTextArea from "./ChatTextArea"
 import TaskHeader from "./TaskHeader"
 import AutoApproveMenu from "./AutoApproveMenu"
-import splashIcon from "../../../../assets/icons/pearai-agent-splash.svg"
+import splashIcon from "@assets/icons/pearai-agent-splash.svg"
 import { Button } from "../ui/button-pear-scn"
-import {
-	vscBackground,
-	vscBadgeBackground,
-	vscButtonBackground,
-	vscEditorBackground,
-	vscForeground,
-	vscInputBorder,
-	vscSidebarBorder,
-} from "../ui"
+import { vscButtonBackground } from "../ui"
 import { PlanningBar } from "./PlanningBar"
 
 import SystemPromptWarning from "./SystemPromptWarning"
@@ -1338,7 +1328,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 							increaseViewportBy={{ top: 3_000, bottom: Number.MAX_SAFE_INTEGER }} // hack to make sure the last message is always rendered to get truly perfect scroll to bottom animation when new messages are added (Number.MAX_SAFE_INTEGER is safe for arithmetic operations, which is all virtuoso uses this value for in src/sizeRangeSystem.ts)
 							data={groupedMessages} // messages is the raw format returned by extension, modifiedMessages is the manipulated structure that combines certain messages of related type, and visibleMessages is the filtered structure that removes messages that should not be rendered
 							itemContent={itemContent}
-							atBottomStateChange={(isAtBottom) => {
+							atBottomStateChange={(isAtBottom: boolean) => {
 								setIsAtBottom(isAtBottom)
 								if (isAtBottom) {
 									disableAutoScrollRef.current = false
@@ -1363,20 +1353,17 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 						</div>
 					) : (
 						<div
-							className={`flex ${
-								primaryButtonText || secondaryButtonText || isStreaming ? "px-[15px] pt-[10px]" : "p-0"
-							} ${
-								primaryButtonText || secondaryButtonText || isStreaming
+							className={`flex ${primaryButtonText || secondaryButtonText || isStreaming ? "px-[15px] pt-[10px]" : "p-0"
+								} ${primaryButtonText || secondaryButtonText || isStreaming
 									? enableButtons || (isStreaming && !didClickCancel)
 										? "opacity-100"
 										: "opacity-50"
 									: "opacity-0"
-							}`}>
+								}`}>
 							{primaryButtonText && !isStreaming && (
 								<Button
 									disabled={!enableButtons}
 									style={{
-										// backgroundColor: "#E64C9E",
 										backgroundColor: vscButtonBackground,
 										color: "var(--vscode-button-foreground)",
 										flex: secondaryButtonText ? 1 : 2,
@@ -1399,7 +1386,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 																: primaryButtonText === t("chat:proceedAnyways.title")
 																	? t("chat:proceedAnyways.tooltip")
 																	: primaryButtonText ===
-																		  t("chat:proceedWhileRunning.title")
+																		t("chat:proceedWhileRunning.title")
 																		? t("chat:proceedWhileRunning.tooltip")
 																		: undefined
 									}
@@ -1458,7 +1445,6 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 				mode={mode}
 				setMode={setMode}
 				modeShortcutText={modeShortcutText}
-				// isNewTask={taskHistory.length === 0}
 			/>
 			<div id="roo-portal" />
 		</div>

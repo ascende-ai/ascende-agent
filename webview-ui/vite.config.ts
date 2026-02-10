@@ -53,6 +53,7 @@ export default defineConfig({
 			"@": resolve(__dirname, "./src"),
 			"@src": resolve(__dirname, "./src"),
 			"@roo": resolve(__dirname, "../src"),
+			"@assets": resolve(__dirname, "../assets"),
 		},
 	},
 	build: {

@@ -17,6 +17,8 @@
 		"clean": "rimraf build"
 	},
 	"dependencies": {
+		"@fontsource-variable/geist": "^5.2.8",
+		"@fontsource-variable/geist-mono": "^5.2.7",
 		"@headlessui/react": "^2.2.0",
 		"@heroicons/react": "^2.2.0",
 		"@radix-ui/react-alert-dialog": "^1.1.6",
