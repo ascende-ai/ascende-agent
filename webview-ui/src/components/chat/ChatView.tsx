@@ -66,7 +66,10 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 	const { t } = useAppTranslation()
 	const modeShortcutText = `${isMac ? "⌘" : "Ctrl"} + . ${t("chat:forNextMode")}`
 	const {
-		clineMessages: messages,
+		clineMessages,
+		eigentMessages,
+		eigentAsk,
+		clearEigentAsk,
 		taskHistory,
 		apiConfiguration,
 		mcpServers,
@@ -90,6 +93,9 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 		historyPreviewCollapsed,
 		creatorModeConfig,
 	} = useExtensionState()
+
+	/** Use Eigent messages when present, else Cline messages */
+	const messages = eigentMessages.length > 0 ? eigentMessages : clineMessages
 
 	const { tasks } = useTaskSearch()
 
@@ -224,6 +230,12 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 			text = text.trim()
 
 			if (text || images.length > 0) {
+				if (eigentAsk) {
+					vscode.postMessage({ type: "humanReplySubmitted", text })
+					clearEigentAsk()
+					handleChatReset()
+					return
+				}
 				if (messages.length === 0) {
 					vscode.postMessage({ type: "newTask", text, images })
 				} else if (clineAsk) {
@@ -247,7 +259,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 				handleChatReset()
 			}
 		},
-		[messages.length, clineAsk, handleChatReset],
+		[messages.length, clineAsk, eigentAsk, clearEigentAsk, handleChatReset],
 	)
 
 	const handleSetChatBoxMessage = useCallback(
@@ -666,6 +678,15 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 	)
 
 	useEffect(() => {
+		// Eigent Engine: when agent asks for human input, show text area
+		if (eigentAsk) {
+			setTextAreaDisabled(false)
+			setClineAsk("followup")
+			setEnableButtons(true)
+			setPrimaryButtonText(undefined)
+			setSecondaryButtonText(undefined)
+			return
+		}
 		// if last message is an ask, show user ask UI
 		// if user finished a task, then start a new task with a new conversation history since in this moment that the extension is waiting for user response, the user could close the extension and the conversation history would be lost.
 		// basically as long as a task is active, the conversation history will be persisted
@@ -839,7 +860,7 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 					break
 			}
 		}
-	}, [lastMessage, secondLastMessage, isAutoApproved, t])
+	}, [lastMessage, secondLastMessage, isAutoApproved, t, eigentAsk])
 
 	useEffect(() => {
 		// This ensures the first message is not read, future user messages are

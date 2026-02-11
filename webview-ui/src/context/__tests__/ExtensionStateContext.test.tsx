@@ -1,6 +1,6 @@
 // cd webview-ui && npx jest src/context/__tests__/ExtensionStateContext.test.tsx
 
-import { render, screen, act } from "@testing-library/react"
+import { render, screen, act, waitFor } from "@testing-library/react"
 
 import { ExtensionState } from "@roo/shared/ExtensionMessage"
 import { ExtensionStateContextProvider, useExtensionState, mergeExtensionState } from "../ExtensionStateContext"
@@ -138,6 +138,52 @@ describe("ExtensionStateContext", () => {
 				apiProvider: "anthropic",
 			}),
 		)
+	})
+
+	it("handles eigentEvent and updates eigentMessages", async () => {
+		const EigentTestComponent = () => {
+			const { eigentMessages, eigentAsk } = useExtensionState()
+			return (
+				<div>
+					<div data-testid="eigent-messages">{JSON.stringify(eigentMessages)}</div>
+					<div data-testid="eigent-ask">{eigentAsk ? eigentAsk.question : "none"}</div>
+				</div>
+			)
+		}
+
+		render(
+			<ExtensionStateContextProvider>
+				<EigentTestComponent />
+			</ExtensionStateContextProvider>,
+		)
+
+		// Simulate Eigent backend: confirmed
+		await act(async () => {
+			window.postMessage(
+				{ type: "eigentEvent", step: "confirmed", data: { question: "Hello world" } },
+				"*",
+			)
+		})
+
+		await waitFor(() => {
+			expect(screen.getByTestId("eigent-messages").textContent).toContain("Hello world")
+		})
+
+		// Simulate ask
+		await act(async () => {
+			window.postMessage(
+				{
+					type: "eigentEvent",
+					step: "ask",
+					data: { agent: "dev", question: "Proceed?" },
+				},
+				"*",
+			)
+		})
+
+		await waitFor(() => {
+			expect(screen.getByTestId("eigent-ask").textContent).toBe("Proceed?")
+		})
 	})
 
 	it("correctly merges partial updates to apiConfiguration", () => {

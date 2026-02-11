@@ -33,7 +33,7 @@ export class AnthropicVertexHandler extends BaseProvider implements SingleComple
 				googleAuth: new GoogleAuth({
 					scopes: ["https://www.googleapis.com/auth/cloud-platform"],
 					credentials: safeJsonParse<JWTInput>(this.options.vertexJsonCredentials, undefined),
-				}),
+				}) as unknown as NonNullable<ConstructorParameters<typeof AnthropicVertex>[0]>["googleAuth"],
 			})
 		} else if (this.options.vertexKeyFile) {
 			this.client = new AnthropicVertex({
@@ -42,7 +42,7 @@ export class AnthropicVertexHandler extends BaseProvider implements SingleComple
 				googleAuth: new GoogleAuth({
 					scopes: ["https://www.googleapis.com/auth/cloud-platform"],
 					keyFile: this.options.vertexKeyFile,
-				}),
+				}) as unknown as NonNullable<ConstructorParameters<typeof AnthropicVertex>[0]>["googleAuth"],
 			})
 		} else {
 			this.client = new AnthropicVertex({ projectId, region })

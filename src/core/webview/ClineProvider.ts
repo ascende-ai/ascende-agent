@@ -48,6 +48,9 @@ import { getUri } from "./getUri"
 import { getSystemPromptFilePath } from "../prompts/sections/custom-system-prompt"
 import { telemetryService } from "../../services/telemetry/TelemetryService"
 import { getWorkspacePath } from "../../utils/path"
+import { getAscendeUseEigentEngine } from "../../shared/ascendeBackend"
+import { EigentOrchestrator } from "../EigentOrchestrator"
+import { buildEigentChatParams } from "../eigent"
 import { webviewMessageHandler } from "./webviewMessageHandler"
 import { WebviewMessage } from "../../shared/WebviewMessage"
 import { PEARAI_URL } from "../../shared/pearaiApi"
@@ -74,6 +77,7 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		return this._workspaceTracker
 	}
 	protected mcpHub?: McpHub // Change from private to protected
+	private eigentOrchestrator?: EigentOrchestrator
 
 	public isViewLaunched = false
 	public settingsImportedAt?: number
@@ -460,8 +464,35 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 		return data
 	}
 
+	public getEigentOrchestrator(): EigentOrchestrator | undefined {
+		return this.eigentOrchestrator
+	}
+
 	public async initClineWithSubTask(parent: Cline, task?: string, images?: string[]) {
 		return this.initClineWithTask(task, images, parent)
+	}
+
+	/**
+	 * Initialize Eigent Engine task (Ascende backend). Used when ascendeUseEigentEngine is true.
+	 */
+	public async initEigentWithTask(task?: string, images?: string[]): Promise<void> {
+		await this.removeClineFromStack()
+
+		const { apiConfiguration } = await this.getState()
+		const buildChatParams = async (question: string, imgs?: string[]) =>
+			buildEigentChatParams(apiConfiguration, question, imgs)
+
+		this.eigentOrchestrator = new EigentOrchestrator({
+			context: this.context,
+			workspacePath: getWorkspacePath(),
+			postMessage: (msg) => this.postMessageToWebview(msg as unknown as ExtensionMessage),
+			buildChatParams,
+		})
+
+		const question = task ?? ""
+		this.eigentOrchestrator.startTask(question, images).catch((e) => {
+			this.log(`Eigent task error: ${e instanceof Error ? e.message : String(e)}`)
+		})
 	}
 
 	// when initializing a new task, (not from history but from a tool command new_task) there is no need to remove the previouse task
@@ -483,7 +514,12 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 			>
 		> = {},
 		creatorModeConfig: CreatorModeConfig = { creatorMode: false },
-	) {
+	): Promise<Cline | void> {
+		if (getAscendeUseEigentEngine()) {
+			await this.initEigentWithTask(task, images)
+			return
+		}
+
 		const {
 			apiConfiguration,
 			customModePrompts,
@@ -887,6 +923,11 @@ export class ClineProvider extends EventEmitter<ClineProviderEvents> implements 
 	}
 
 	async cancelTask() {
+		if (this.eigentOrchestrator?.isRunning) {
+			await this.eigentOrchestrator.abortTask()
+			return
+		}
+
 		const cline = this.getCurrentCline()
 
 		if (!cline) {

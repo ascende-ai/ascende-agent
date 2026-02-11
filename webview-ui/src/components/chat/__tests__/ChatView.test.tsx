@@ -1071,3 +1071,56 @@ describe("ChatView - Focus Grabbing Tests", () => {
 		expect(mockFocus).toHaveBeenCalledTimes(FOCUS_CALLS_ON_INIT)
 	})
 })
+
+/** Post an Eigent SSE event (simulates extension → webview) */
+const postEigentEvent = (step: string, data: Record<string, unknown>) => {
+	window.postMessage({ type: "eigentEvent", step, data }, "*")
+}
+
+describe("ChatView - Eigent Engine", () => {
+	beforeEach(() => jest.clearAllMocks())
+
+	it("displays Eigent task in webview when eigentEvent confirmed is received", async () => {
+		renderChatView()
+
+		// Hydrate initial state
+		mockPostMessage({ clineMessages: [] })
+
+		// Simulate Eigent backend: confirmed (task start) – task shows in TaskHeader
+		await act(async () => {
+			postEigentEvent("confirmed", { question: "Write a hello world script" })
+		})
+
+		await waitFor(() => {
+			expect(document.body.textContent).toContain("Write a hello world script")
+		})
+	})
+
+	it("shows task and processes ask step from Eigent backend", async () => {
+		renderChatView()
+
+		mockPostMessage({ clineMessages: [] })
+
+		// Start task
+		await act(async () => {
+			postEigentEvent("confirmed", { question: "Refactor this code" })
+		})
+
+		await waitFor(() => {
+			expect(document.body.textContent).toContain("Refactor this code")
+		})
+
+		// Simulate ask – adds message and sets eigentAsk; webview stays responsive
+		await act(async () => {
+			postEigentEvent("ask", {
+				agent: "developer",
+				question: "Should I use TypeScript or JavaScript?",
+			})
+		})
+
+		// Verify no crash; task remains visible
+		await waitFor(() => {
+			expect(document.body.textContent).toContain("Refactor this code")
+		})
+	})
+})

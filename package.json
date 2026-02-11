@@ -327,6 +327,16 @@
 					"type": "string",
 					"default": "",
 					"description": "%settings.customStoragePath.description%"
+				},
+				"roo-cline.ascendeBackendUrl": {
+					"type": "string",
+					"default": "http://localhost:8000",
+					"description": "Ascende Eigent backend URL. Use http://localhost:8000 for local dev."
+				},
+				"roo-cline.ascendeUseEigentEngine": {
+					"type": "boolean",
+					"default": true,
+					"description": "Use Eigent Engine (Ascende backend) instead of Cline for task execution. Requires ascendeBackendUrl and Ascende API key."
 				}
 			}
 		}

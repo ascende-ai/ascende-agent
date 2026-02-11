@@ -129,6 +129,7 @@ export interface WebviewMessage {
 		| "setHistoryPreviewCollapsed"
 		| "openPearAIAuth"
 		| "openPearAICreatorFeedbackOverlay"
+		| "humanReplySubmitted"
 	text?: string
 	disabled?: boolean
 	askResponse?: ClineAskResponse

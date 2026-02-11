@@ -11,6 +11,7 @@ import { supportPrompt } from "../../shared/support-prompt"
 
 import { checkoutDiffPayloadSchema, checkoutRestorePayloadSchema, WebviewMessage } from "../../shared/WebviewMessage"
 import { checkExistKey } from "../../shared/checkExistApiConfig"
+import { getAscendeUseEigentEngine } from "../../shared/ascendeBackend"
 import { experimentDefault } from "../../shared/experiments"
 import { Terminal } from "../../integrations/terminal/Terminal"
 import { openFile, openImage } from "../../integrations/misc/open-file"
@@ -191,6 +192,9 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 		case "askResponse":
 			provider.getCurrentCline()?.handleWebviewAskResponse(message.askResponse!, message.text, message.images)
 			break
+		case "humanReplySubmitted":
+			provider.getEigentOrchestrator()?.submitHumanReply(message.text ?? "")
+			break
 		case "terminalOperation":
 			if (message.terminalOperation) {
 				provider.getCurrentCline()?.handleTerminalOperation(message.terminalOperation)
@@ -199,6 +203,9 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 		case "clearTask":
 			// clear task resets the current session and allows for a new task to be started, if this session is a subtask - it allows the parent task to be resumed
 			await provider.finishSubTask(t("common:tasks.canceled"))
+			if (getAscendeUseEigentEngine()) {
+				await provider.postMessageToWebview({ type: "eigentTaskCleared" })
+			}
 			await provider.postStateToWebview()
 			break
 		case "didShowAnnouncement":
@@ -375,9 +382,14 @@ export const webviewMessageHandler = async (provider: ClineProvider, message: We
 
 			break
 		}
-		case "cancelTask":
+		case "cancelTask": {
+			const wasEigent = provider.getEigentOrchestrator()?.isRunning
 			await provider.cancelTask()
+			if (wasEigent) {
+				await provider.postMessageToWebview({ type: "eigentTaskCleared" })
+			}
 			break
+		}
 		case "allowedCommands":
 			await provider.context.globalState.update("allowedCommands", message.commands)
 			// Also update workspace settings

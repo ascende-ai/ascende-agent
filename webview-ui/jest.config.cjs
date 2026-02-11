@@ -9,6 +9,9 @@ module.exports = {
 	setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
 	moduleNameMapper: {
 		"\\.(css|less|scss|sass)$": "identity-obj-proxy",
+		"\\.(svg|png|jpg|jpeg|gif|webp)$": "<rootDir>/src/__mocks__/fileMock.js",
+		"^@assets/(.*)\\.(svg|png|jpg|jpeg|gif|webp)$": "<rootDir>/src/__mocks__/fileMock.js",
+		"^@assets/(.*)$": "<rootDir>/../assets/$1",
 		"^vscrui$": "<rootDir>/src/__mocks__/vscrui.ts",
 		"^@vscode/webview-ui-toolkit/react$": "<rootDir>/src/__mocks__/@vscode/webview-ui-toolkit/react.ts",
 		"^@/(.*)$": "<rootDir>/src/$1",

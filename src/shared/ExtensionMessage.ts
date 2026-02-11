@@ -69,7 +69,13 @@ export interface ExtensionMessage {
 	| "setHistoryPreviewCollapsed"
 	| "commandExecutionStatus"
 	| "creatorModeUpdate"
+	| "eigentEvent"
+	| "eigentTaskCleared"
 	text?: string
+	/** Eigent SSE step (e.g. ask, execute_file_write, end). Present when type is eigentEvent. */
+	step?: string
+	/** Eigent event payload. Present when type is eigentEvent. */
+	data?: Record<string, unknown>
 	action?:
 	| "chatButtonClicked"
 	| "mcpButtonClicked"

@@ -85,7 +85,9 @@ export async function newTaskTool(
 				{},
 				cline.creatorModeConfig
 			)
-			cline.emit("taskSpawned", newCline.taskId)
+			if (newCline) {
+				cline.emit("taskSpawned", newCline.taskId)
+			}
 
 			pushToolResult(`Successfully created new task in ${targetMode.name} mode with message: ${message}`)
 

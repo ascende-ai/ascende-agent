@@ -1,6 +1,11 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react"
 import { useEvent } from "react-use"
-import { ApiConfigMeta, ExtensionMessage, ExtensionState } from "@roo/shared/ExtensionMessage"
+import {
+	ApiConfigMeta,
+	ClineMessage,
+	ExtensionMessage,
+	ExtensionState,
+} from "@roo/shared/ExtensionMessage"
 import { ApiConfiguration } from "@roo/shared/api"
 import { vscode } from "@src/utils/vscode"
 import { convertTextMateToHljs } from "@src/utils/textMateToHljs"
@@ -104,6 +109,12 @@ export interface ExtensionStateContextType extends ExtensionState {
 		newProjectType?: string
 		newProjectPath?: string
 	}) => void
+	/** Eigent Engine: messages when using Ascende backend */
+	eigentMessages: ClineMessage[]
+	/** Eigent Engine: when agent asks for human input */
+	eigentAsk: { agent: string; question: string } | undefined
+	/** Clear Eigent ask state (call when user submits reply) */
+	clearEigentAsk: () => void
 }
 
 export const ExtensionStateContext = createContext<ExtensionStateContextType | undefined>(undefined)
@@ -200,6 +211,8 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 	const [openedTabs, setOpenedTabs] = useState<Array<{ label: string; isActive: boolean; path?: string }>>([])
 	const [mcpServers, setMcpServers] = useState<McpServer[]>([])
 	const [currentCheckpoint, setCurrentCheckpoint] = useState<string>()
+	const [eigentMessages, setEigentMessages] = useState<ClineMessage[]>([])
+	const [eigentAsk, setEigentAsk] = useState<{ agent: string; question: string } | undefined>(undefined)
 
 	const setListApiConfigMeta = useCallback(
 		(value: ApiConfigMeta[]) => setState((prevState) => ({ ...prevState, listApiConfigMeta: value })),
@@ -272,6 +285,106 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 				}
 				case "listApiConfig": {
 					setListApiConfigMeta(message.listApiConfig ?? [])
+					break
+				}
+				case "eigentEvent": {
+					const step = message.step ?? ""
+					const data = (message.data ?? {}) as Record<string, unknown>
+					const ts = Date.now()
+
+					const toSay = (say: ClineMessage["say"], text: string, partial?: boolean): ClineMessage => ({
+						ts,
+						type: "say",
+						say,
+						text,
+						...(partial !== undefined && { partial }),
+					})
+
+					const toAsk = (question: string): ClineMessage => ({
+						ts,
+						type: "ask",
+						ask: "followup",
+						text: question,
+					})
+
+					switch (step) {
+						case "confirmed": {
+							const question = (data.question as string) || ""
+							setEigentMessages([toSay("text", question)])
+							setEigentAsk(undefined)
+							setShowWelcome(false)
+							break
+						}
+						case "notice": {
+							const notice = data.notice as Record<string, unknown> | undefined
+							const content =
+								(data.message as string) ||
+								(data.content as string) ||
+								(notice && typeof notice === "object"
+									? [notice.message_title, notice.message_description]
+											.filter(Boolean)
+											.join(": ")
+									: "") ||
+								""
+							if (content) {
+								setEigentMessages((prev) => [...prev, toSay("text", content)])
+							}
+							break
+						}
+						case "ask": {
+							const agent = (data.agent as string) ?? ""
+							const question = (data.question as string) ?? ""
+							setEigentMessages((prev) => [...prev, toAsk(question)])
+							setEigentAsk({ agent, question })
+							break
+						}
+						case "create_agent":
+						case "activate_agent":
+						case "assign_task": {
+							const name = (data.name as string) ?? (data.agent as string) ?? step
+							setEigentMessages((prev) => [...prev, toSay("text", `[${step}] ${name}`)])
+							break
+						}
+						case "decompose_text":
+						case "to_sub_tasks": {
+							const text = (data.text as string) ?? (data.content as string)
+							if (text) {
+								setEigentMessages((prev) => [...prev, toSay("text", text)])
+							}
+							break
+						}
+						case "execute_file_write":
+						case "execute_read_file":
+						case "execute_search_replace":
+						case "execute_list_files":
+						case "execute_terminal": {
+							const path = (data.path as string) ?? ""
+							const desc = path ? `${step} ${path}` : step
+							setEigentMessages((prev) => [...prev, toSay("text", desc, true)])
+							break
+						}
+						case "write_file":
+						case "terminal": {
+							const desc = (data.path as string) ?? (data.command as string) ?? step
+							setEigentMessages((prev) => [...prev, toSay("text", desc)])
+							break
+						}
+						case "end":
+						case "error":
+						case "timeout": {
+							const msg = (data.message as string) ?? step
+							setEigentMessages((prev) => [...prev, toSay("text", `[${step}] ${msg}`)])
+							setEigentAsk(undefined)
+							break
+						}
+						default:
+							break
+					}
+					break
+				}
+				case "eigentTaskCleared": {
+					setEigentMessages([])
+					setEigentAsk(undefined)
 					break
 				}
 			}
@@ -385,6 +498,9 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 			setState((prevState) => ({ ...prevState, historyPreviewCollapsed: value })), // Implement the setter
 		setCreatorModeConfig: (value) =>
 			setState((prevState) => ({ ...prevState, creatorModeConfig: value })),
+		eigentMessages,
+		eigentAsk,
+		clearEigentAsk: () => setEigentAsk(undefined),
 	}
 
 	return <ExtensionStateContext.Provider value={contextValue}>{children}</ExtensionStateContext.Provider>
