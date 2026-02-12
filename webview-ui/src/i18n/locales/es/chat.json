@@ -1,5 +1,5 @@
 {
-	"greeting": "Bienvenido a ascende.ai Agent (Powered by Roo Code / Cline)",
+	"greeting": "Bienvenido a ascende.ai Agent",
 	"task": {
 		"title": "Tarea",
 		"seeMore": "Ver más",
@@ -192,7 +192,7 @@
 	"autoApprove": {
 		"title": "Auto-aprobar:",
 		"none": "Ninguno",
-		"description": "Auto-aprobar permite a ascende.ai Agent (Powered by Roo Code / Cline) realizar acciones sin pedir permiso. Habilita solo para acciones en las que confíes plenamente. Configuración más detallada disponible en <settingsLink>Configuración</settingsLink>."
+		"description": "Auto-aprobar permite a ascende.ai Agent realizar acciones sin pedir permiso. Habilita solo para acciones en las que confíes plenamente. Configuración más detallada disponible en <settingsLink>Configuración</settingsLink>."
 	},
 	"reasoning": {
 		"thinking": "Pensando",
@@ -202,7 +202,7 @@
 		"copyToInput": "Copiar a la entrada (o Shift + clic)"
 	},
 	"announcement": {
-		"title": "🎉 ascende.ai Agent (Powered by Roo Code / Cline) 3.15 publicado",
+		"title": "🎉 ascende.ai Agent 3.15 publicado",
 		"description": "Agent Code 3.15 trae nuevas funcionalidades y mejoras basadas en tus comentarios.",
 		"whatsNew": "Novedades",
 		"feature1": "<bold>Caché de prompts para Vertex</bold>: Se ha añadido soporte de caché de prompts para Vertex AI, mejorando los tiempos de respuesta y reduciendo los costos de API",
@@ -236,7 +236,7 @@
 	"systemPromptWarning": "ADVERTENCIA: Anulación de instrucciones del sistema personalizada activa. Esto puede romper gravemente la funcionalidad y causar un comportamiento impredecible.",
 	"shellIntegration": {
 		"title": "Advertencia de ejecución de comandos",
-		"description": "Tu comando se está ejecutando sin la integración de shell de terminal de VSCode. Para suprimir esta advertencia, puedes desactivar la integración de shell en la sección <strong>Terminal</strong> de la <settingsLink>configuración de ascende.ai Agent (Powered by Roo Code / Cline)</settingsLink> o solucionar problemas de integración de terminal de VSCode usando el enlace de abajo.",
+		"description": "Tu comando se está ejecutando sin la integración de shell de terminal de VSCode. Para suprimir esta advertencia, puedes desactivar la integración de shell en la sección <strong>Terminal</strong> de la <settingsLink>configuración de ascende.ai Agent</settingsLink> o solucionar problemas de integración de terminal de VSCode usando el enlace de abajo.",
 		"troubleshooting": "Haz clic aquí para ver la documentación de integración de shell."
 	}
 }

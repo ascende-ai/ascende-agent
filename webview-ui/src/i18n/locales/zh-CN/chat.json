@@ -1,5 +1,5 @@
 {
-	"greeting": "欢迎使用 ascende.ai Agent (Powered by Roo Code / Cline)",
+	"greeting": "欢迎使用 ascende.ai Agent",
 	"task": {
 		"title": "任务",
 		"seeMore": "展开",
@@ -202,7 +202,7 @@
 		"copyToInput": "复制到输入框（或按住Shift点击）"
 	},
 	"announcement": {
-		"title": "🎉 ascende.ai Agent (Powered by Roo Code / Cline) 3.15 已发布",
+		"title": "🎉 ascende.ai Agent 3.15 已发布",
 		"description": "Agent Code 3.15 带来基于您反馈的新功能和改进。",
 		"whatsNew": "新特性",
 		"feature1": "<bold>Vertex 提示词缓存</bold>: 为 Vertex AI 添加提示词缓存支持，提高响应速度并降低 API 费用",
@@ -236,7 +236,7 @@
 	"systemPromptWarning": "警告：自定义系统提示词覆盖已激活。这可能严重破坏功能并导致不可预测的行为。",
 	"shellIntegration": {
 		"title": "命令执行警告",
-		"description": "您的命令正在没有 VSCode 终端 shell 集成的情况下执行。要隐藏此警告，您可以在 <settingsLink>ascende.ai Agent (Powered by Roo Code / Cline) 设置</settingsLink>的 <strong>Terminal</strong> 部分禁用 shell 集成，或使用下方链接排查 VSCode 终端集成问题。",
+		"description": "您的命令正在没有 VSCode 终端 shell 集成的情况下执行。要隐藏此警告，您可以在 <settingsLink>ascende.ai Agent 设置</settingsLink>的 <strong>Terminal</strong> 部分禁用 shell 集成，或使用下方链接排查 VSCode 终端集成问题。",
 		"troubleshooting": "点击此处查看 shell 集成文档。"
 	}
 }

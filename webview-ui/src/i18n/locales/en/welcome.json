@@ -1,6 +1,6 @@
 {
 	"greeting": "Hi, I'm Roo!",
-	"introduction": "<strong>ascende.ai Agent (Powered by Roo Code / Cline) is the premiere autonomous coding agent.</strong> Get ready to architect, code, debug, and boost your productivity like you've never seen before. To continue, ascende.ai Agent (Powered by Roo Code / Cline) requires an API key.",
+	"introduction": "<strong>ascende.ai Agent is the premiere autonomous coding agent.</strong> Get ready to architect, code, debug, and boost your productivity like you've never seen before. To continue, ascende.ai Agent requires an API key.",
 	"notice": "To get started, this extension needs an API provider.",
 	"start": "Let's go!",
 	"chooseProvider": "Choose an API provider to get started:",
@@ -16,7 +16,7 @@
 	"startRouter": "Express Setup Through a Router",
 	"startCustom": "Bring Your Own API Key",
 	"telemetry": {
-		"title": "Help Improve ascende.ai Agent (Powered by Roo Code / Cline)",
+		"title": "Help Improve ascende.ai Agent",
 		"anonymousTelemetry": "Send anonymous error and usage data to help us fix bugs and improve the extension. No code, prompts, or personal information is ever sent.",
 		"changeSettings": "You can always change this at the bottom of the <settingsLink>settings</settingsLink>",
 		"settings": "settings",

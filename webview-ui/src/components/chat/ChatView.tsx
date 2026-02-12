@@ -36,7 +36,6 @@ import ChatRow from "./ChatRow"
 import ChatTextArea from "./ChatTextArea"
 import TaskHeader from "./TaskHeader"
 import AutoApproveMenu from "./AutoApproveMenu"
-import splashIcon from "@assets/icons/pearai-agent-splash.svg"
 import { Button } from "../ui/button-pear-scn"
 import { vscButtonBackground } from "../ui"
 import { PlanningBar } from "./PlanningBar"
@@ -483,15 +482,10 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 		return modifiedMessages.filter((message) => {
 			switch (message.ask) {
 				case "completion_result":
-					// Don't show a chat row for a completion_result ask without
-					// text. This specific type of message only occurs if cline
-					// wants to execute a command as part of its completion
-					// result, in which case we interject the completion_result
-					// tool with the execute_command tool.
-					if (message.text === "") {
-						return false
-					}
-					break
+					// Don't show a chat row for a completion_result ask.
+					// These are only used for flow control (releasing button control).
+					// The actual completion message is shown via say: "completion_result"
+					return false
 				case "api_req_failed": // This message is used to update the latest `api_req_started` that the request failed.
 				case "resume_task":
 				case "resume_completed_task":
@@ -1250,14 +1244,14 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 				flexDirection: "column",
 				overflow: "hidden",
 			}}>
-			{creatorModeConfig?.creatorMode === true && (
-				<PlanningBar
-					requestedPlan={task?.text || ""}
-					isStreaming={isStreaming}
-					stopCallback={() => vscode.postMessage({ type: "cancelTask" })}
-				/>
-			)}
-			{task ? (
+		{creatorModeConfig?.creatorMode === true && (
+			<PlanningBar
+				requestedPlan={task?.text || ""}
+				isStreaming={isStreaming}
+				stopCallback={() => vscode.postMessage({ type: "cancelTask" })}
+			/>
+		)}
+		{task ? (
 				<>
 					<TaskHeader
 						task={task}
@@ -1297,16 +1291,10 @@ const ChatViewComponent: React.ForwardRefRenderFunction<ChatViewRef, ChatViewPro
 						<>
 							<div className="max-w-2xl mx-auto w-full h-[calc(100vh-270px)] text-center flex flex-col justify-center">
 								<div className="w-full text-center flex flex-col items-center justify-center relative gap-5">
-									<img src={splashIcon} alt="..." />
 									<div className="w-[300px] flex-col justify-start items-start gap-5 inline-flex">
 										<div className="flex flex-col text-left">
-											<div className="text-2xl">ascende.ai Coding Agent</div>
-
+											<div className="text-2xl">ascende.ai Agent</div>
 										</div>
-									</div>
-									<div className="w-[300px] text-left opacity-50 text-xs leading-[18px]">
-										Autonomous coding agent that has access to your development environment (with
-										your permission) for a feedback loop to add features, fix bugs, and more.
 									</div>
 								</div>
 							</div>

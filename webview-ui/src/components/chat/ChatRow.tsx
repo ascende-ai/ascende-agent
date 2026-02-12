@@ -42,7 +42,7 @@ interface ChatRowProps {
 	onSuggestionClick?: (answer: string, event?: React.MouseEvent) => void
 }
 
-interface ChatRowContentProps extends Omit<ChatRowProps, "onHeightChange"> {}
+interface ChatRowContentProps extends Omit<ChatRowProps, "onHeightChange"> { }
 
 const ChatRow = memo(
 	(props: ChatRowProps) => {
@@ -308,8 +308,8 @@ export const ChatRowContent = ({
 									: tool.lineNumber === 0
 										? t("chat:fileOperations.wantsToInsertAtEnd")
 										: t("chat:fileOperations.wantsToInsertWithLineNumber", {
-												lineNumber: tool.lineNumber,
-											})}
+											lineNumber: tool.lineNumber,
+										})}
 							</span>
 						</div>
 						<CodeAccordian
@@ -793,7 +793,7 @@ export const ChatRowContent = ({
 									...headerStyle,
 									marginBottom:
 										((cost === null || cost === undefined) && apiRequestFailedMessage) ||
-										apiReqStreamingFailedMessage
+											apiReqStreamingFailedMessage
 											? 10
 											: 0,
 									justifyContent: "space-between",
@@ -816,25 +816,25 @@ export const ChatRowContent = ({
 							</div>
 							{(((cost === null || cost === undefined) && apiRequestFailedMessage) ||
 								apiReqStreamingFailedMessage) && (
-								<>
-									<p style={{ ...pStyle, color: "var(--vscode-errorForeground)" }}>
-										{apiRequestFailedMessage || apiReqStreamingFailedMessage}
-										{apiRequestFailedMessage?.toLowerCase().includes("powershell") && (
-											<>
-												<br />
-												<br />
-												{t("chat:powershell.issues")}{" "}
-												<a
-													href="https://github.com/cline/cline/wiki/TroubleShooting-%E2%80%90-%22PowerShell-is-not-recognized-as-an-internal-or-external-command%22"
-													style={{ color: "inherit", textDecoration: "underline" }}>
-													troubleshooting guide
-												</a>
-												.
-											</>
-										)}
-									</p>
-								</>
-							)}
+									<>
+										<p style={{ ...pStyle, color: "var(--vscode-errorForeground)" }}>
+											{apiRequestFailedMessage || apiReqStreamingFailedMessage}
+											{apiRequestFailedMessage?.toLowerCase().includes("powershell") && (
+												<>
+													<br />
+													<br />
+													{t("chat:powershell.issues")}{" "}
+													<a
+														href="https://github.com/cline/cline/wiki/TroubleShooting-%E2%80%90-%22PowerShell-is-not-recognized-as-an-internal-or-external-command%22"
+														style={{ color: "inherit", textDecoration: "underline" }}>
+														troubleshooting guide
+													</a>
+													.
+												</>
+											)}
+										</p>
+									</>
+								)}
 
 							{isExpanded && (
 								<div style={{ marginTop: "10px" }}>
@@ -1073,21 +1073,9 @@ export const ChatRowContent = ({
 						</>
 					)
 				case "completion_result":
-					if (message.text) {
-						return (
-							<div>
-								<div style={headerStyle}>
-									{icon}
-									{title}
-								</div>
-								<div style={{ color: "var(--vscode-charts-green)", paddingTop: 10 }}>
-									<Markdown markdown={message.text} partial={message.partial} />
-								</div>
-							</div>
-						)
-					} else {
-						return null // Don't render anything when we get a completion_result ask without text
-					}
+					// Don't render completion_result ask - it's only for flow control
+					// The actual completion message is already shown via say: "completion_result"
+					return null
 				case "followup":
 					return (
 						<>

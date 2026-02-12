@@ -1,5 +1,5 @@
 {
-	"greeting": "歡迎使用 ascende.ai Agent (Powered by Roo Code / Cline)",
+	"greeting": "歡迎使用 ascende.ai Agent",
 	"task": {
 		"title": "工作",
 		"seeMore": "顯示更多",
@@ -192,7 +192,7 @@
 	"autoApprove": {
 		"title": "自動核准：",
 		"none": "無",
-		"description": "自動核准讓 ascende.ai Agent (Powered by Roo Code / Cline) 可以在無需徵求您同意的情況下執行動作。請僅對您完全信任的動作啟用此功能。您可以在<settingsLink>設定</settingsLink>中進行更詳細的調整。"
+		"description": "自動核准讓 ascende.ai Agent 可以在無需徵求您同意的情況下執行動作。請僅對您完全信任的動作啟用此功能。您可以在<settingsLink>設定</settingsLink>中進行更詳細的調整。"
 	},
 	"reasoning": {
 		"thinking": "思考中",
@@ -202,7 +202,7 @@
 		"copyToInput": "複製到輸入框（或按住 Shift 並點選）"
 	},
 	"announcement": {
-		"title": "🎉 ascende.ai Agent (Powered by Roo Code / Cline) 3.15 已發布",
+		"title": "🎉 ascende.ai Agent 3.15 已發布",
 		"description": "Agent Code 3.15 帶來基於您意見回饋的新功能與改進。",
 		"whatsNew": "新功能",
 		"feature1": "<bold>Vertex 提示詞快取</bold>: 為 Vertex AI 新增提示詞快取支援，改善回應時間並降低 API 費用",
@@ -236,7 +236,7 @@
 	"systemPromptWarning": "警告：自訂系統提示詞覆蓋已啟用。這可能嚴重破壞功能並導致不可預測的行為。",
 	"shellIntegration": {
 		"title": "命令執行警告",
-		"description": "您的命令正在沒有 VSCode 終端機 shell 整合的情況下執行。要隱藏此警告，您可以在 <settingsLink>ascende.ai Agent (Powered by Roo Code / Cline) 設定</settingsLink>的 <strong>Terminal</strong> 部分停用 shell 整合，或使用下方連結排查 VSCode 終端機整合問題。",
+		"description": "您的命令正在沒有 VSCode 終端機 shell 整合的情況下執行。要隱藏此警告，您可以在 <settingsLink>ascende.ai Agent 設定</settingsLink>的 <strong>Terminal</strong> 部分停用 shell 整合，或使用下方連結排查 VSCode 終端機整合問題。",
 		"troubleshooting": "點擊此處查看 shell 整合文件。"
 	}
 }
